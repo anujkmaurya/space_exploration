@@ -1,4 +1,4 @@
-package routes
+package delivery
 
 import (
 	"github.com/personal-work/space_exploration/internal/usecase"

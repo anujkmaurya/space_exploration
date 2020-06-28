@@ -1,4 +1,4 @@
-package controllers
+package usecase
 
 import (
 	"net/http"
@@ -6,5 +6,5 @@ import (
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("tested OK"))
+	w.Write([]byte("tested OK\n"))
 }
