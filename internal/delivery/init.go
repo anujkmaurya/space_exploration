@@ -8,4 +8,5 @@ func Init() {
 
 	// Handle routes
 	http.Handle("/", InitHandlers())
+
 }
