@@ -1,7 +1,7 @@
-# space_exploration
+# Space_exploration
 Space DNS for future 
 
-# Create Sector
+### Create Sector
 ```
 curl --location --request POST 'http://localhost:9001/sectors' \
 --header 'Content-Type: text/plain' \
@@ -11,7 +11,7 @@ curl --location --request POST 'http://localhost:9001/sectors' \
 }'
 ```
 
-# Create Sector
+### Create Sector
 ```
 curl --location --request POST 'http://localhost:9001/sectors' \
 --header 'Content-Type: text/plain' \
@@ -21,7 +21,7 @@ curl --location --request POST 'http://localhost:9001/sectors' \
 }'
 ```
 
-# Create drones
+### Create drones
 ```
 curl --location --request POST 'http://localhost:9001/drones' \
 --header 'Content-Type: text/plain' \
@@ -32,7 +32,7 @@ curl --location --request POST 'http://localhost:9001/drones' \
 }'
 ```
 
-# Create DNS
+### Create DNS
 ```
 curl --location --request POST 'http://localhost:9001/dns' \
 --header 'Content-Type: text/plain' \
@@ -43,16 +43,16 @@ curl --location --request POST 'http://localhost:9001/dns' \
 }'
 ```
 
-# Get All Sector Info
+### Get All Sector Info
 ```
 curl --location --request GET 'http://localhost:9001/sectors'
 ```
-# Get All Drone Info
+### Get All Drone Info
 ```
 curl --location --request GET 'http://localhost:9001/drones'
 ```
 
-# Get All DNS inInfofo
+### Get All DNS inInfofo
 ```
 curl --location --request GET 'http://localhost:9001/dns'
 ```
