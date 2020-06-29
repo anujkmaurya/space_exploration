@@ -2,11 +2,11 @@ package models
 
 //Drone struct declaration
 type Drone struct {
-	ID     uint64      `json:"id"`
-	Name   string      `json:"name"`
-	Sector uint64      `json:"sector_id"`
-	Loc    Coordinates `json:"coordinates"`
-	Vel    float64     `json:"velocity"`
+	ID       uint64      `json:"id"`
+	Name     string      `json:"name"`
+	SectorID uint64      `json:"sector_id"`
+	Loc      Coordinates `json:"coordinates"`
+	Vel      float64     `json:"velocity"`
 }
 
 //Coordinates coordinates in x, y,z direction

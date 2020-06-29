@@ -7,9 +7,11 @@ type DNS struct {
 	SectorID []Sector `json:"sectors"`
 }
 
-//SectorList
-type SectorList struct {
-	Sectors []Sector `json:"sectors"`
-}
+// //SectorList
+// type SectorList struct {
+// 	Sectors []Sector `json:"sectors"`
+// }
 
 var DNSMap map[uint64]*DNS
+
+var DNSIDCounter uint64
