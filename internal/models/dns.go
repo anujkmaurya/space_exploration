@@ -2,7 +2,7 @@ package models
 
 //DNS struct declaration
 type DNS struct {
-	ID       int64    `json:"id"`
+	ID       uint64   `json:"id"`
 	Name     string   `json:"name"`
 	SectorID []Sector `json:"sectors"`
 }
@@ -11,3 +11,5 @@ type DNS struct {
 type SectorList struct {
 	Sectors []Sector `json:"sectors"`
 }
+
+var DNSMap map[uint64]*DNS

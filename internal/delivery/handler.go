@@ -32,6 +32,7 @@ func (fn HandlerFunc) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
+	//if err is nil and data is present
 	if data != nil && err == nil {
 		response.Data = data
 		if buf, err = json.Marshal(response); err == nil {
@@ -50,8 +51,8 @@ func (fn HandlerFunc) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		case *models.AppError:
 			//fill error response here
 			response.Header.ErrorMessage = t.ErrorMessage
-			errStatus = t.HttpResposeCode
-			log.Printf("Error http Code: %+v, Message: %+v\n", t.HttpResposeCode, t.ErrorMessage)
+			errStatus = t.HTTPResposeCode
+			log.Printf("Error http Code: %+v, Message: %+v\n", t.HTTPResposeCode, t.ErrorMessage)
 		}
 		w.WriteHeader(errStatus)
 	} else {

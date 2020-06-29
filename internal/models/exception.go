@@ -1,14 +1,9 @@
 package models
 
-//Exception struct declaration
-type Header struct {
-	ProcessTime  string `json:"process_time"`
-	ErrorMessage string `json:"err_msg"`
-}
-
+//AppError : defines application errors
 type AppError struct {
 	ErrorMessage    string
-	HttpResposeCode int
+	HTTPResposeCode int
 }
 
 func (m *AppError) Error() string {
