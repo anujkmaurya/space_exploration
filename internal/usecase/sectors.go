@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/personal-work/space_exploration/internal/models"
@@ -12,7 +13,7 @@ func CreateSector(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	sector := &models.Sector{}
 	json.NewDecoder(r.Body).Decode(sector)
 
-	// log.Println("sector ", sector)
+	log.Println("sector ", sector)
 
 	//check if sector is already created
 	if _, ok := models.SectorsMap[sector.ID]; ok {
@@ -20,6 +21,7 @@ func CreateSector(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	}
 
 	models.SectorIDCounter++
+
 	//set sector ID
 	sector.ID = models.SectorIDCounter
 
@@ -27,4 +29,15 @@ func CreateSector(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	models.SectorsMap[sector.ID] = sector
 
 	return sector, nil
+}
+
+//GetAllSectors : get all sector info
+func GetAllSectors(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+	sectorList := []*models.Sector{}
+
+	for _, sector := range models.SectorsMap {
+		sectorList = append(sectorList, sector)
+	}
+
+	return sectorList, nil
 }

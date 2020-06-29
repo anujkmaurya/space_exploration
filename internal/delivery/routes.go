@@ -14,12 +14,17 @@ func InitHandlers() *mux.Router {
 	//healthcheck api
 	r.HandleFunc("/healthcheck", usecase.HealthCheck).Methods("GET")
 
-	//Create sector
+	//sector api's
 	r.Handle("/sectors", HandlerFunc(usecase.CreateSector)).Methods("POST")
-	//Create sector
+	r.Handle("/sectors", HandlerFunc(usecase.GetAllSectors)).Methods("GET")
+
+	//drone api's
 	r.Handle("/drones", HandlerFunc(usecase.CreateDrone)).Methods("POST")
-	//Create sector
+	r.Handle("/drones", HandlerFunc(usecase.GetAllDrones)).Methods("GET")
+
+	//Dns api's
 	r.Handle("/dns", HandlerFunc(usecase.CreateDNS)).Methods("POST")
+	r.Handle("/dns", HandlerFunc(usecase.GetAllDNS)).Methods("GET")
 
 	return r
 }

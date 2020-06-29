@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/personal-work/space_exploration/internal/models"
@@ -42,19 +43,39 @@ func CreateDrone(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	drone := &models.Drone{}
 	json.NewDecoder(r.Body).Decode(drone)
 
-	// log.Println("drone ", drone)
+	log.Println("drone ", drone)
 
 	//check if drone is already created
 	if _, ok := models.DronesMap[drone.ID]; ok {
 		return nil, createAppError("drone already exist", http.StatusConflict)
 	}
 
+	//update drone info in sectorMap
+	//check if sector exists
+	if _, ok := models.SectorsMap[drone.SectorID]; !ok {
+		return nil, createAppError("sector doesn't exist", http.StatusBadRequest)
+	}
+
 	models.DroneIDCounter++
 	//set drone ID
-	drone.ID = models.SectorIDCounter
+	drone.ID = models.DroneIDCounter
+
+	sector := models.SectorsMap[drone.SectorID]
+	sector.DroneList = append(sector.DroneList, drone)
 
 	//insert in global map
 	models.DronesMap[drone.ID] = drone
 
 	return drone, nil
+}
+
+//GetAllDrones : get all drones info
+func GetAllDrones(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+	droneList := []*models.Drone{}
+
+	for _, drone := range models.DronesMap {
+		droneList = append(droneList, drone)
+	}
+
+	return droneList, nil
 }
