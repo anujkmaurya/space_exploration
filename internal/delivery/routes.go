@@ -15,6 +15,6 @@ func InitHandlers() *mux.Router {
 	r.HandleFunc("/healthcheck", usecase.HealthCheck).Methods("GET")
 
 	//
-	r.HandleFunc("/sectors/{", controllers.CreateUser).Methods("GET")
+	r.Handle("/sectors", HandlerFunc(usecase.CreateSector)).Methods("POST")
 	return r
 }
