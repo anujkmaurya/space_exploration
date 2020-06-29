@@ -11,17 +11,7 @@ curl --location --request POST 'http://localhost:9001/sectors' \
 }'
 ```
 
-### Create Sector
-```
-curl --location --request POST 'http://localhost:9001/sectors' \
---header 'Content-Type: text/plain' \
---data-raw '{
-"sector_id" : 1,
-"sector_name" : "sector1"
-}'
-```
-
-### Create drones
+### Create Drones
 ```
 curl --location --request POST 'http://localhost:9001/drones' \
 --header 'Content-Type: text/plain' \
