@@ -5,11 +5,13 @@ import (
 	"net/http"
 
 	"github.com/personal-work/space_exploration/internal/delivery"
+	"github.com/personal-work/space_exploration/internal/usecase"
 )
 
 func main() {
 
-	delivery.Init()
+	iUsecase := usecase.Init()
+	delivery.Init(iUsecase)
 
 	// serve
 	log.Printf("Server up on port 9001")

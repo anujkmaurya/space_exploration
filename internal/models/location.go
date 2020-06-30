@@ -17,4 +17,5 @@ type LocationReq struct {
 	Vel      float64 `json:"vel"`
 	IsCustom bool
 	DroneID  uint64
+	DnsID    uint64
 }

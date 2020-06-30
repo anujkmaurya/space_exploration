@@ -58,6 +58,11 @@ func (u *Usecase) GetDroneLocation(droneLocReq *models.LocationReq) (interface{}
 
 	drone := models.DronesMap[droneID]
 
+	//check if sector of drone is monitored by given DNS
+	if drone.SectorID != droneLocReq.DnsID {
+		return nil, models.CreateAppError("the DNS is not serving the sector in which Drone is located", http.StatusBadRequest)
+	}
+
 	//set present coordinates and velocity of drone
 	drone.SetCoordinates(droneLocReq.X, droneLocReq.Y, droneLocReq.Z)
 	drone.SetVelocity(droneLocReq.Vel)

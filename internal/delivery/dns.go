@@ -16,6 +16,7 @@ func (d *Delivery) parseGetLocationRequest(w http.ResponseWriter, r *http.Reques
 	locReq := models.LocationReq{}
 	json.NewDecoder(r.Body).Decode(&locReq)
 
+	//get drone id
 	params := mux.Vars(r)
 	var id = params["id"]
 
@@ -24,6 +25,15 @@ func (d *Delivery) parseGetLocationRequest(w http.ResponseWriter, r *http.Reques
 		return nil, models.CreateAppError("droneID is not an integer", http.StatusBadRequest)
 	}
 	locReq.DroneID = droneID
+
+	//get dns id
+	var dnsIDStr = params["dnsID"]
+
+	dnsID, err := strconv.ParseUint(dnsIDStr, 0, 64)
+	if err != nil {
+		return nil, models.CreateAppError("dnsID is not an integer", http.StatusBadRequest)
+	}
+	locReq.DnsID = dnsID
 
 	//check typeof resp needed
 	r.ParseForm()
