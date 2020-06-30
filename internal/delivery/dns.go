@@ -11,7 +11,7 @@ import (
 	"github.com/personal-work/space_exploration/internal/models"
 )
 
-func (d *Delivery) parseGetLocationRequest(w http.ResponseWriter, r *http.Request) (*models.LocationReq, error) {
+func (d *Delivery) parseGetLocationRequest(r *http.Request) (*models.LocationReq, error) {
 
 	locReq := models.LocationReq{}
 	json.NewDecoder(r.Body).Decode(&locReq)
@@ -49,7 +49,7 @@ func (d *Delivery) parseGetLocationRequest(w http.ResponseWriter, r *http.Reques
 func (d *Delivery) GetDroneLocation(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 
 	//parse function in delivery layer
-	locReq, err := d.parseGetLocationRequest(w, r)
+	locReq, err := d.parseGetLocationRequest(r)
 	if err != nil {
 		log.Println("error occured in parsing req:", err.Error())
 		return nil, err

@@ -6,6 +6,7 @@ import (
 	"github.com/personal-work/space_exploration/internal/models"
 )
 
+//UsecaseInterface defines all the exported functions available for used by delivery layer
 type UsecaseInterface interface {
 	CreateDrone(w http.ResponseWriter, r *http.Request) (interface{}, error)
 	GetAllDrones(w http.ResponseWriter, r *http.Request) (interface{}, error)

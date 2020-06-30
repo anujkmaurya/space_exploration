@@ -25,6 +25,7 @@ func (d *Delivery) InitHandlers() *mux.Router {
 	//Dns api's
 	r.Handle("/dns", HandlerFunc(d.UsecaseLayer.CreateDNS)).Methods("POST")
 	r.Handle("/dns", HandlerFunc(d.UsecaseLayer.GetAllDNS)).Methods("GET")
+	//api to find location of given drone w.r.t given dns
 	r.Handle("/dns/{dnsID}/drones/{id}/location", HandlerFunc(d.GetDroneLocation)).Methods("POST")
 
 	return r
