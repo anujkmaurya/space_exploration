@@ -56,3 +56,9 @@ curl --location --request POST 'http://localhost:9001/dns/1/drones/1' \
 }'
 
 ```
+
+### Run using Compiled Binary
+```
+cd space_exploration/cmd/space_explore
+./space_explore
+```
