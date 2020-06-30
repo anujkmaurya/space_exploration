@@ -9,10 +9,9 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/personal-work/space_exploration/internal/models"
-	"github.com/personal-work/space_exploration/internal/usecase"
 )
 
-func parseGetLocationRequest(w http.ResponseWriter, r *http.Request) (*models.LocationReq, error) {
+func (d *Delivery) parseGetLocationRequest(w http.ResponseWriter, r *http.Request) (*models.LocationReq, error) {
 
 	locReq := models.LocationReq{}
 	json.NewDecoder(r.Body).Decode(&locReq)
@@ -37,16 +36,16 @@ func parseGetLocationRequest(w http.ResponseWriter, r *http.Request) (*models.Lo
 }
 
 //GetDroneLocation : get drone location
-func GetDroneLocation(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+func (d *Delivery) GetDroneLocation(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 
 	//parse function in delivery layer
-	locReq, err := parseGetLocationRequest(w, r)
+	locReq, err := d.parseGetLocationRequest(w, r)
 	if err != nil {
 		log.Println("error occured in parsing req:", err.Error())
 		return nil, err
 	}
 
-	resp, err := usecase.GetDroneLocation(locReq)
+	resp, err := d.UsecaseLayer.GetDroneLocation(locReq)
 	if err != nil {
 		log.Println("error occured in getting drone location:", err.Error())
 		return nil, err

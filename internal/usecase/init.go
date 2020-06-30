@@ -1,21 +1,16 @@
-package delivery
+package usecase
 
 import (
-	"net/http"
-
 	"github.com/personal-work/space_exploration/internal/models"
-	"github.com/personal-work/space_exploration/internal/usecase"
 )
 
-func Init(iUsecase usecase.UsecaseInterface) {
+func Init() UsecaseInterface {
 
-	d := &Delivery{
-		UsecaseLayer: iUsecase,
-	}
+	//init resources
+	initResources()
 
-	// Handle routes
-	http.Handle("/", d.InitHandlers())
-
+	usecase := &Usecase{}
+	return usecase
 }
 
 func initResources() {

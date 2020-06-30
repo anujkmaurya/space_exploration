@@ -8,22 +8,8 @@ import (
 	"github.com/personal-work/space_exploration/internal/models"
 )
 
-// //DNS struct declaration
-// type DNS struct {
-// 	ID       uint64   `json:"id"`
-// 	Name     string   `json:"name"`
-// 	SectorID []Sector `json:"sectors"`
-// }
-
-// // //SectorList
-// // type SectorList struct {
-// // 	Sectors []Sector `json:"sectors"`
-// // }
-
-// var DNSMap map[uint64]*DNS
-
 //CreateDNS : creates new DNS
-func CreateDNS(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+func (u *Usecase) CreateDNS(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	dns := &models.DNS{}
 	json.NewDecoder(r.Body).Decode(dns)
 
@@ -52,7 +38,7 @@ func CreateDNS(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 }
 
 //GetAllDNS : get all DNS info
-func GetAllDNS(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+func (u *Usecase) GetAllDNS(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	dnsList := []*models.DNS{}
 
 	for _, dns := range models.DNSMap {
@@ -60,4 +46,21 @@ func GetAllDNS(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	}
 
 	return dnsList, nil
+}
+
+//GetDroneLocation : get drone location
+func (u *Usecase) GetDroneLocation(droneLocReq *models.LocationReq) (interface{}, error) {
+
+	droneID := droneLocReq.DroneID
+	if _, ok := models.DronesMap[droneID]; !ok {
+		return nil, models.CreateAppError("drone with this droneID doesn't exist", http.StatusBadRequest)
+	}
+
+	drone := models.DronesMap[droneID]
+
+	//set present coordinates and velocity of drone
+	drone.SetCoordinates(droneLocReq.X, droneLocReq.Y, droneLocReq.Z)
+	drone.SetVelocity(droneLocReq.Vel)
+
+	return u.findLocationReturnType(drone, droneLocReq.IsCustom), nil
 }

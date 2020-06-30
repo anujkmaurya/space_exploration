@@ -7,7 +7,7 @@ import (
 )
 
 //InitHandlers inits all the routes
-func InitHandlers() *mux.Router {
+func (d *Delivery) InitHandlers() *mux.Router {
 
 	r := mux.NewRouter()
 
@@ -15,17 +15,17 @@ func InitHandlers() *mux.Router {
 	r.HandleFunc("/healthcheck", usecase.HealthCheck).Methods("GET")
 
 	//sector api's
-	r.Handle("/sectors", HandlerFunc(usecase.CreateSector)).Methods("POST")
-	r.Handle("/sectors", HandlerFunc(usecase.GetAllSectors)).Methods("GET")
+	r.Handle("/sectors", HandlerFunc(d.UsecaseLayer.CreateSector)).Methods("POST")
+	r.Handle("/sectors", HandlerFunc(d.UsecaseLayer.GetAllSectors)).Methods("GET")
 
 	//drone api's
-	r.Handle("/drones", HandlerFunc(usecase.CreateDrone)).Methods("POST")
-	r.Handle("/drones", HandlerFunc(usecase.GetAllDrones)).Methods("GET")
+	r.Handle("/drones", HandlerFunc(d.UsecaseLayer.CreateDrone)).Methods("POST")
+	r.Handle("/drones", HandlerFunc(d.UsecaseLayer.GetAllDrones)).Methods("GET")
 
 	//Dns api's
-	r.Handle("/dns", HandlerFunc(usecase.CreateDNS)).Methods("POST")
-	r.Handle("/dns", HandlerFunc(usecase.GetAllDNS)).Methods("GET")
-	r.Handle("/dns/{dnsID}/drones/{id}/location", HandlerFunc(GetDroneLocation)).Methods("POST")
+	r.Handle("/dns", HandlerFunc(d.UsecaseLayer.CreateDNS)).Methods("POST")
+	r.Handle("/dns", HandlerFunc(d.UsecaseLayer.GetAllDNS)).Methods("GET")
+	r.Handle("/dns/{dnsID}/drones/{id}/location", HandlerFunc(d.GetDroneLocation)).Methods("POST")
 
 	return r
 }

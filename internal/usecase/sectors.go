@@ -9,7 +9,7 @@ import (
 )
 
 //CreateSector : creates sector
-func CreateSector(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+func (u *Usecase) CreateSector(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	sector := &models.Sector{}
 	json.NewDecoder(r.Body).Decode(sector)
 
@@ -32,7 +32,7 @@ func CreateSector(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 }
 
 //GetAllSectors : get all sector info
-func GetAllSectors(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+func (u *Usecase) GetAllSectors(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	sectorList := []*models.Sector{}
 
 	for _, sector := range models.SectorsMap {
