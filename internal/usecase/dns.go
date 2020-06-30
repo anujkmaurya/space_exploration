@@ -58,8 +58,22 @@ func (u *Usecase) GetDroneLocation(droneLocReq *models.LocationReq) (interface{}
 
 	drone := models.DronesMap[droneID]
 
-	//check if sector of drone is monitored by given DNS
-	if drone.SectorID != droneLocReq.DnsID {
+	//get dns info
+	if _, ok := models.DNSMap[droneLocReq.DnsID]; !ok {
+		return nil, models.CreateAppError("dns with this dnsID doesn't exist", http.StatusBadRequest)
+	}
+
+	dns := models.DNSMap[droneLocReq.DnsID]
+	found := false
+	for _, secID := range dns.SectorList {
+
+		//check if sector of drone is monitored by given DNS
+		if drone.SectorID == secID {
+			found = true
+			break
+		}
+	}
+	if !found {
 		return nil, models.CreateAppError("the DNS is not serving the sector in which Drone is located", http.StatusBadRequest)
 	}
 
