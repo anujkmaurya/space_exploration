@@ -5,7 +5,7 @@ type Location struct {
 	Loc float64 `json:"loc"`
 }
 
-//LocationCustom custom response for location of drone for friendly company
+//LocationCustom custom response for location of drone for friendly company: Mom's Friendly Robot Company
 type LocationCustom struct {
 	Loc float64 `json:"location"`
 }

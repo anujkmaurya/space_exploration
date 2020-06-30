@@ -55,7 +55,7 @@ func (u *Usecase) GetAllDrones(w http.ResponseWriter, r *http.Request) (interfac
 
 //findLocation : wrapper to call desired corelogic as per drone type
 func (u *Usecase) findLocation(drone *models.Drone) float64 {
-	if drone.Type == "latest" {
+	if drone.Type == "v2" {
 		return u.findLocationAdvancedCoreLogic(drone)
 	}
 	return u.findLocationCoreLogic(drone)
