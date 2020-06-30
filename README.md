@@ -46,7 +46,19 @@ curl --location --request GET 'http://localhost:9001/dns'
 
 ### Get location of given drone from given DNS
 ```
-curl --location --request POST 'http://localhost:9001/dns/1/drones/1' \
+curl --location --request POST 'http://localhost:9001/dns/1/drones/1/location' \
+--header 'Content-Type: text/plain' \
+--data-raw '{
+"x": 123.12,
+"y": 456.56,
+"z": 789.89,
+"vel": 20.0
+}'
+
+```
+### Get location of given drone from given DNS : custome for friend company
+```
+curl --location --request POST 'http://localhost:9001/dns/1/drones/1/location?is_custom=true' \
 --header 'Content-Type: text/plain' \
 --data-raw '{
 "x": 123.12,
