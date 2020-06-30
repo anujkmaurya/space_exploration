@@ -6,7 +6,6 @@ Space DNS for future
 curl --location --request POST 'http://localhost:9001/sectors' \
 --header 'Content-Type: text/plain' \
 --data-raw '{
-"sector_id" : 1,
 "sector_name" : "sector1"
 }'
 ```
@@ -16,7 +15,6 @@ curl --location --request POST 'http://localhost:9001/sectors' \
 curl --location --request POST 'http://localhost:9001/drones' \
 --header 'Content-Type: text/plain' \
 --data-raw '{
-"id" : 1,
 "name" : "drone1",
 "sector_id" : 1
 }'
@@ -27,7 +25,6 @@ curl --location --request POST 'http://localhost:9001/drones' \
 curl --location --request POST 'http://localhost:9001/dns' \
 --header 'Content-Type: text/plain' \
 --data-raw '{
-"id" : 1,
 "name" : "dns1",
 "sectors" : [1]
 }'
@@ -42,7 +39,20 @@ curl --location --request GET 'http://localhost:9001/sectors'
 curl --location --request GET 'http://localhost:9001/drones'
 ```
 
-### Get All DNS inInfofo
+### Get All DNS Info
 ```
 curl --location --request GET 'http://localhost:9001/dns'
+```
+
+### Get location of given drone from given DNS
+```
+curl --location --request POST 'http://localhost:9001/dns/1/drones/1' \
+--header 'Content-Type: text/plain' \
+--data-raw '{
+"x": 123.12,
+"y": 456.56,
+"z": 789.89,
+"vel": 20.0
+}'
+
 ```
