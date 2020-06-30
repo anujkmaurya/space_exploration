@@ -31,13 +31,13 @@ func CreateDNS(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 
 	//check if drone is already created
 	if _, ok := models.DNSMap[dns.ID]; ok {
-		return nil, createAppError("dns system already exist", http.StatusConflict)
+		return nil, models.CreateAppError("dns system already exist", http.StatusConflict)
 	}
 
 	for _, sectorID := range dns.SectorList {
 		//check if sector exists
 		if _, ok := models.SectorsMap[sectorID]; !ok {
-			return nil, createAppError(fmt.Sprintf("sectorID:%d doesn't exist", sectorID), http.StatusBadRequest)
+			return nil, models.CreateAppError(fmt.Sprintf("sectorID:%d doesn't exist", sectorID), http.StatusBadRequest)
 		}
 	}
 

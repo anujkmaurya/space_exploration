@@ -17,7 +17,7 @@ func CreateSector(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 
 	//check if sector is already created
 	if _, ok := models.SectorsMap[sector.ID]; ok {
-		return nil, createAppError("sector already exist", http.StatusConflict)
+		return nil, models.CreateAppError("sector already exist", http.StatusConflict)
 	}
 
 	models.SectorIDCounter++

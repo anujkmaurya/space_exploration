@@ -4,6 +4,7 @@ package models
 type Drone struct {
 	ID       uint64      `json:"id"`
 	Name     string      `json:"name"`
+	Type     string      `json:"type"`
 	SectorID uint64      `json:"sector_id"`
 	Loc      Coordinates `json:"coordinates"`
 	Vel      float64     `json:"velocity"`
@@ -16,16 +17,23 @@ type Coordinates struct {
 	Z float64 `json:"z"`
 }
 
-//Location location of drone
-type Location struct {
-	Loc float64 `json:"loc"`
-}
-
-//Location2 custom response for location of drone
-type Location2 struct {
-	Loc float64 `json:"location"`
-}
-
 var DronesMap map[uint64]*Drone
 
 var DroneIDCounter uint64
+
+//SumOfCoordinates : to get sum of coordination
+func (c Coordinates) SumOfCoordinates() float64 {
+	return c.X + c.Y + c.Z
+}
+
+//SetCoordinates : sets present coordinats of drone
+func (d *Drone) SetCoordinates(x, y, z float64) {
+	d.Loc.X = x
+	d.Loc.Y = y
+	d.Loc.Z = z
+}
+
+//SetVelocity : sets present velocity of drone
+func (d *Drone) SetVelocity(v float64) {
+	d.Vel = v
+}

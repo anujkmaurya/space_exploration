@@ -8,36 +8,6 @@ import (
 	"github.com/personal-work/space_exploration/internal/models"
 )
 
-// //Drone struct declaration
-// type Drone struct {
-// 	ID       uint64      `json:"id"`
-// 	Name     string      `json:"name"`
-// 	SectorID uint64      `json:"sector_id"`
-// 	Loc      Coordinates `json:"coordinates"`
-// 	Vel      float64     `json:"velocity"`
-// }
-
-// //Coordinates coordinates in x, y,z direction
-// type Coordinates struct {
-// 	X float64 `json:"x"`
-// 	Y float64 `json:"y"`
-// 	Z float64 `json:"z"`
-// }
-
-// //Location location of drone
-// type Location struct {
-// 	Loc float64 `json:"loc"`
-// }
-
-// //Location2 custom response for location of drone
-// type Location2 struct {
-// 	Loc float64 `json:"location"`
-// }
-
-// var DronesMap map[uint64]*Drone
-
-// var DroneIDCounter uint64
-
 //CreateDrone : creates new drone
 func CreateDrone(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	drone := &models.Drone{}
@@ -47,18 +17,21 @@ func CreateDrone(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 
 	//check if drone is already created
 	if _, ok := models.DronesMap[drone.ID]; ok {
-		return nil, createAppError("drone already exist", http.StatusConflict)
+		return nil, models.CreateAppError("drone already exist", http.StatusConflict)
 	}
 
-	//update drone info in sectorMap
 	//check if sector exists
 	if _, ok := models.SectorsMap[drone.SectorID]; !ok {
-		return nil, createAppError("sector doesn't exist", http.StatusBadRequest)
+		return nil, models.CreateAppError("sector doesn't exist", http.StatusBadRequest)
 	}
 
 	models.DroneIDCounter++
 	//set drone ID
 	drone.ID = models.DroneIDCounter
+
+	if drone.Type == "" {
+		drone.Type = "v1"
+	}
 
 	sector := models.SectorsMap[drone.SectorID]
 	sector.DroneList = append(sector.DroneList, drone)
@@ -78,4 +51,42 @@ func GetAllDrones(w http.ResponseWriter, r *http.Request) (interface{}, error) {
 	}
 
 	return droneList, nil
+}
+
+//GetDroneLocation : get drone location
+func GetDroneLocation(droneLocReq *models.LocationReq) (interface{}, error) {
+
+	droneID := droneLocReq.DroneID
+	if _, ok := models.DronesMap[droneID]; !ok {
+		return nil, models.CreateAppError("drone with this droneID doesn't exist", http.StatusBadRequest)
+	}
+
+	drone := models.DronesMap[droneID]
+
+	//set present coordinates and velocity of drone
+	drone.SetCoordinates(droneLocReq.X, droneLocReq.Y, droneLocReq.Z)
+	drone.SetVelocity(droneLocReq.Vel)
+
+	return findLocationReturnType(drone, droneLocReq.IsCustom), nil
+}
+
+//findLocation : wrapper to call desired corelogic as per drone type
+func findLocation(drone *models.Drone) float64 {
+	if drone.Type == "latest" {
+		return findLocationAdvancedCoreLogic(drone)
+	}
+	return findLocationCoreLogic(drone)
+}
+
+//findLocationReturnType : wrapper to call desired corelogic as per drone type
+func findLocationReturnType(drone *models.Drone, isCutom bool) interface{} {
+	var normalResp models.Location
+	var customResp models.LocationCustom
+
+	if isCutom {
+		customResp.Loc = findLocation(drone)
+		return customResp
+	}
+	normalResp.Loc = findLocation(drone)
+	return normalResp
 }
