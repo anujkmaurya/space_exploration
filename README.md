@@ -75,7 +75,7 @@ cd space_exploration/cmd/space_explore
 ./space_explore
 ```
 
-## Running tests
+### Running tests
 
 A proper Go environment is required in order to run this project.
 Once setup, tests can be run with the following command:
@@ -86,13 +86,11 @@ go test -v ./...
 
 ### Running with Docker
 
-```
-To build the image from the Dockerfile, run:
+
+#### To build the image from the Dockerfile, run:
 
 `docker build -t space_exploration .`
 
-To start an interactive shell, run:
+#### To start an interactive shell, run:
 
 `docker run -p 9001:9001 -it --rm --name space space_exploration`
-
-```
